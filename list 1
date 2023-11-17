@@ -1,0 +1,118 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class CalculatorGUI extends JFrame {
+
+    private JTextField display;
+    private JButton[] numberButtons;
+    private JButton[] operationButtons;
+    private JButton addButton, subButton, mulButton, divButton, eqButton, clrButton;
+
+    private double num1, num2, result;
+    private char operator;
+
+    public CalculatorGUI() {
+        setTitle("Калькулятор");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 400);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
+        display = new JTextField();
+        display.setEditable(false);
+        display.setHorizontalAlignment(JTextField.RIGHT);
+        add(display, BorderLayout.NORTH);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(4, 4));
+
+        numberButtons = new JButton[10];
+        for (int i = 0; i < 10; i++) {
+            numberButtons[i] = new JButton(String.valueOf(i));
+            numberButtons[i].addActionListener(new NumberButtonListener());
+            buttonPanel.add(numberButtons[i]);
+        }
+
+        addButton = new JButton("+");
+        subButton = new JButton("-");
+        mulButton = new JButton("*");
+        divButton = new JButton("/");
+        eqButton = new JButton("=");
+        clrButton = new JButton("C");
+
+        operationButtons = new JButton[]{addButton, subButton, mulButton, divButton, eqButton, clrButton};
+
+        for (JButton button : operationButtons) {
+            button.addActionListener(new OperationButtonListener());
+            buttonPanel.add(button);
+        }
+
+        add(buttonPanel, BorderLayout.CENTER);
+    }
+
+    private class NumberButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton source = (JButton) e.getSource();
+            display.setText(display.getText() + source.getText());
+        }
+    }
+
+    private class OperationButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton source = (JButton) e.getSource();
+            char op = source.getText().charAt(0);
+
+            if (op == 'C') {
+                display.setText("");
+                num1 = num2 = result = 0;
+                operator = '\u0000'; // Reset operator
+            } else if (op == '=') {
+                if (!display.getText().isEmpty()) {
+                    num2 = Double.parseDouble(display.getText());
+                    result = performOperation(num1, num2, operator);
+                    display.setText(String.valueOf(result));
+                    num1 = result;
+                    num2 = 0;
+                    operator = '\u0000'; // Reset operator
+                }
+            } else {
+                if (!display.getText().isEmpty()) {
+                    num1 = Double.parseDouble(display.getText());
+                    display.setText("");
+                    operator = op;
+                }
+            }
+        }
+
+        private double performOperation(double num1, double num2, char operator) {
+            switch (operator) {
+                case '+':
+                    return num1 + num2;
+                case '-':
+                    return num1 - num2;
+                case '*':
+                    return num1 * num2;
+                case '/':
+                    if (num2 != 0) {
+                        return num1 / num2;
+                    } else {
+                        JOptionPane.showMessageDialog(CalculatorGUI.this, "Деление на ноль недопустимо!");
+                        return 0;
+                    }
+                default:
+                    return 0;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            CalculatorGUI calculator = new CalculatorGUI();
+            calculator.setVisible(true);
+        });
+    }
+}
