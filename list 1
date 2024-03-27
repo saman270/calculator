@@ -5,12 +5,6 @@ import java.awt.event.ActionListener;
 
 public class CalculatorGUI extends JFrame {
 
-    private JTextField display;
-    private JButton[] numberButtons;
-    private JButton[] operationButtons;
-    private JButton addButton, subButton, mulButton, divButton, eqButton, clrButton;
-
-    private double num1, num2, result;
     private char operator;
 
     public CalculatorGUI() {
