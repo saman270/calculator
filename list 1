@@ -5,12 +5,7 @@ import java.awt.event.ActionListener;
 
 public class CalculatorGUI extends JFrame {
 
-    private char operator;
-
-    public CalculatorGUI() {
-        setTitle("Калькулятор");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 400);
+    private cha
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
