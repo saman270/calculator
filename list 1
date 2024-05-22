@@ -7,15 +7,6 @@ public class CalculatorGUI extends JFrame {
 
     private cha
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
-
-        display = new JTextField();
-        display.setEditable(false);
-        display.setHorizontalAlignment(JTextField.RIGHT);
-        add(display, BorderLayout.NORTH);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(4, 4));
 
         numberButtons = new JButton[10];
         for (int i = 0; i < 10; i++) {
