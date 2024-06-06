@@ -15,6 +15,13 @@ public class CalculatorGUI extends JFrame {
             buttonPanel.add(numberButtons[i]);
         }
 
+        addButton = new JButton("+");  numberButtons = new JButton[10];
+        for (int i = 0; i < 10; i++) {
+            numberButtons[i] = new JButton(String.valueOf(i));
+            numberButtons[i].addActionListener(new NumberButtonListener());
+            buttonPanel.add(numberButtons[i]);
+        }
+
         addButton = new JButton("+");
         subButton = new JButton("-");
         mulButton = new JButton("*");
